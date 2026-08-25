@@ -1,0 +1,73 @@
+{% extends 'inventario/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <h1 class="h2">Productos</h1>
+  {% if perms.inventario.change_producto %}
+  <a class="btn btn-primary" href="{% url 'producto_nuevo' %}">+ Nuevo producto</a>
+  {% endif %}
+</div>
+<form class="card card-body mb-3">
+  <div class="row g-2">
+    <div class="col">
+      <input class="form-control" name="q" value="{{ request.GET.q }}" placeholder="Buscar por código o nombre">
+    </div>
+    <div class="col-md-3">
+      <select title="categoria" class="form-select" name="categoria">
+        <option value="">Todas las categorías</option>
+        {% for x in categorias %}
+        <option value="{{ x.id }}" {% if request.GET.categoria == x.id|stringformat:'s' %}selected{% endif %}>{{ x.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-3">
+      <select title="proveedor" class="form-select" name="proveedor">
+        <option value="">Todos los proveedores</option>
+        {% for x in proveedores %}
+        <option value="{{ x.id }}" {% if request.GET.proveedor == x.id|stringformat:'s' %}selected{% endif %}>{{ x.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-outline-primary">Filtrar</button>
+    </div>
+  </div>
+</form>
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Producto</th>
+          <th>Categoría</th>
+          <th>Proveedor</th>
+          <th>Stock</th>
+          <th>Mínimo</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in productos %}
+        <tr class="{% if p.bajo_minimo %}table-danger{% endif %}">
+          <td>{{ p.codigo }}</td>
+          <td>{{ p.nombre }}</td>
+          <td>{{ p.categoria }}</td>
+          <td>{{ p.proveedor }}</td>
+          <td>{{ p.stock_actual }}</td>
+          <td>{{ p.stock_minimo }}</td>
+          <td>
+            {% if perms.inventario.change_producto %}
+            <a href="{% url 'producto_editar' p.id %}" class="btn btn-sm btn-outline-secondary">Editar</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="7" class="text-muted text-center">Sin productos.</td>
+        </tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'inventario/base.html' %}
+
+{% block title %}Eliminar {{ etiqueta }} | NicaStock{% endblock %}
+
+{% block content %}
+<div class="card col-lg-6">
+  <div class="card-body">
+    <h1 class="h3">Eliminar {{ etiqueta|lower }}</h1>
+    <p>¿Confirma que desea eliminar <strong>{{ instancia }}</strong>?</p>
+    <p class="text-muted small">No será posible eliminarlo si está asociado a productos o movimientos.</p>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+      <a class="btn btn-link" href="{% url destino %}">Cancelar</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

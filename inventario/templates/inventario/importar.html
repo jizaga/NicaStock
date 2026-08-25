@@ -1,0 +1,17 @@
+{% extends 'inventario/base.html' %}
+
+{% block content %}
+<h1 class="h2">Importar productos desde CSV</h1>
+<div class="card col-lg-8">
+  <div class="card-body">
+    <p>Columnas requeridas: <code>codigo,nombre,categoria,proveedor,precio_compra,precio_venta,stock_minimo</code>.L
+      os códigos existentes se actualizan.
+      El stock inicial debe registrarse con un movimiento de entrada para conservar la trazabilidad.</p>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Importar</button>
+      </form>
+    </div>
+  </div>
+  {% endblock %}

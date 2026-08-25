@@ -1,0 +1,26 @@
+<header>
+  <div class="container">
+    <h1>NicaStock</h1>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container">
+        {% if user.is_authenticated %}
+          <div class="navbar-nav me-auto">
+            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+            <a class="nav-link" href="{% url 'productos' %}">Productos</a>
+            <a class="nav-link" href="{% url 'categorias' %}">Categorías</a>
+            <a class="nav-link" href="{% url 'proveedores' %}">Proveedores</a>
+            <a class="nav-link" href="{% url 'movimientos' %}">Movimientos</a>
+            {% if perms.inventario.importar_productos %}
+              <a class="nav-link" href="{% url 'importar_csv' %}">Importar CSV</a>
+            {% endif %}
+          </div>
+          <span class="navbar-text me-3">{{ user.username }}</span>
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-light btn-sm">Salir</button>
+          </form>
+        {% endif %}
+      </div>
+    </nav>
+  </div>
+</header>

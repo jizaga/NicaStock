@@ -1,0 +1,17 @@
+{% extends 'inventario/base.html' %}
+
+{% block title %}
+  {% if instancia %}Editar{% else %}Nuevo{% endif %} {{ etiqueta }} | NicaStock
+{% endblock %}
+
+{% block content %}
+<h1 class="h2">{% if instancia %}Editar{% else %}Nuevo{% endif %} {{ etiqueta|lower }}</h1>
+<form method="post" class="card card-body col-lg-8">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a class="btn btn-link" href="{% url destino %}">Cancelar</a>
+  </div>
+</form>
+{% endblock %}

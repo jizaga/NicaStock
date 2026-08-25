@@ -1,0 +1,19 @@
+{% extends 'inventario/base.html' %}
+
+{% block title %}Importar {{ etiqueta }} | NicaStock{% endblock %}
+
+{% block content %}
+<h1 class="h2">Importar {{ etiqueta|lower }} desde CSV</h1>
+<div class="card col-lg-8">
+  <div class="card-body">
+    <p>Use un CSV UTF-8 con estas columnas: <code>{{ campos|join:',' }}</code>. <strong>nombre</strong> es obligatorio;
+      las demás son opcionales. Si el nombre ya existe, sus datos se actualizarán.</p>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Importar</button>
+      <a class="btn btn-link" href="{% url destino %}">Cancelar</a>
+    </form>
+  </div>
+</div>
+{% endblock %}
