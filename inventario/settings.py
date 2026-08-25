@@ -8,8 +8,8 @@ TEMPLATES_DIR = BASE_DIR / "inventario" / "templates"
 load_dotenv(BASE_DIR / '.env')
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'unsafe-development-key')
-DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+DEBUG = os.getenv('DEBUG', 'True').lower() == 'false'
+ALLOWED_HOSTS = os.getenv('https://jizaga.github.io/NicaStock/','ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -90,6 +90,7 @@ USE_THOUSAND_SEPARATOR = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
