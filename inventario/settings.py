@@ -8,8 +8,8 @@ TEMPLATES_DIR = BASE_DIR / "inventario" / "templates"
 load_dotenv(BASE_DIR / '.env')
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'unsafe-development-key')
-DEBUG = os.getenv('DEBUG', 'True').lower() == 'false'
-ALLOWED_HOSTS = os.getenv('https://jizaga.github.io/NicaStock/','ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -20,7 +20,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_extensions',
-    'debug_toolbar',
     'crispy_forms',
     'crispy_bootstrap5',
     'django_filters',
@@ -41,8 +40,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 ROOT_URLCONF = 'inventario.urls'
 
@@ -58,26 +55,8 @@ TEMPLATES = [{'BACKEND': 'django.template.backends.django.DjangoTemplates',
 
 WSGI_APPLICATION = 'inventario.wsgi.application'
 
-if os.getenv('DB_ENGINE', 'sqlite').lower() == 'mysql':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.getenv('MYSQL_DATABASE', 'inventario'),
-            'USER': os.getenv('MYSQL_USER', 'root'),
-            'PASSWORD': os.getenv('MYSQL_PASSWORD', '4nd0n105'),
-            'HOST': os.getenv('MYSQL_HOST', '127.0.0.1'),
-            'PORT': os.getenv('MYSQL_PORT', '3306'),
-            'OPTIONS': {'charset': 'utf8mb4'}
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3'
-        }
-    }
-    
+DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / "db.sqlite3"}}
+
 AUTH_PASSWORD_VALIDATORS = []
 
 #Internacionalización
@@ -89,18 +68,14 @@ USE_THOUSAND_SEPARATOR = True
 
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [BASE_DIR / 'staticfiles']
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'login'
 
-# Internals IPs
-
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
 
 # CRISPY FORMS
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
